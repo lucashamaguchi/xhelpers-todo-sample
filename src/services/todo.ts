@@ -6,27 +6,15 @@ export class TodoService extends BaseServiceMongoose<ITodo> {
   constructor() {
     super(Todo);
   }
-  sentitiveInfo: any = ["-__v", "password"];
+  sentitiveInfo: any = ["-__v"];
   protected async validate(entity: ITodo, payload: ITodo): Promise<boolean> {
     const invalid = false;
     if (invalid) throw new Error("Invalid payload.");
     return Promise.resolve(true);
   };
-  protected parseSortAsJson(pagination: {
-    offset: number;
-    limit: number;
-    sort: any;
-  }) {
-    if (!pagination.sort) return {};
-    if (typeof pagination.sort === "object") return pagination.sort;
-
-    let sortQuery: {};
-    try {
-      sortQuery = JSON.parse(pagination.sort);
-    } catch (error) {
-      console.log("Invalid sort parameter", error.message);
-      throw 'Invalid parameter "sort", it MUST be a valid JSON / Mongo sort sintax';
-    }
-    return sortQuery;
-  }
+  public async delete(user: any, _id: any): Promise<void> {
+    const entity = await this.Model.findById(_id).lean();
+    if (!entity) throw "Entity not found";
+    await this.Model.deleteOne(_id);
+  };
 }
