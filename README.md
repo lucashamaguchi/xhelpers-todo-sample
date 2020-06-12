@@ -10,6 +10,11 @@
 
 ## Option 1 - With Docker
 
+### Before you Start
+Install:
+- [docker-compose](https://docs.docker.com/compose/install/).
+- [docker](https://docs.docker.com/engine/install/).
+
 ### Set the environment variables
 
 Create a file named `.env` with them in the project root folder. Following the provided `env.example`.
@@ -37,6 +42,14 @@ docker-compose down
 ```
 
 ## Option 2 - Without docker
+
+### Before you Start
+Install:
+- [docker-compose](https://docs.docker.com/compose/install/).
+- [docker](https://docs.docker.com/engine/install/).
+- [Node.js 12+](https://nodejs.org/).
+- [NPM](https://www.npmjs.com/get-npm).
+
 
 ### Set the environment variables
 
