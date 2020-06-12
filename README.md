@@ -24,7 +24,17 @@ On the terminal:
 docker-compose up
 ```
 
+if you are using your own database, run the following command to start just the application
+```bash
+docker-compose up api
+```
+
 Go to http://localhost:3000/documentation
+
+To stop just run
+```bash
+docker-compose down
+```
 
 ## Option 2 - Without docker
 
@@ -53,3 +63,9 @@ npm run dev
 
 
 Go to http://localhost:3000/documentation
+
+
+To stop the database just run
+```bash
+docker-compose down
+```
