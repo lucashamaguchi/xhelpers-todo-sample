@@ -8,7 +8,7 @@ async function start() {
   const options: createServerOptions = {
     serverOptions: {
       port: process.env.PORT || 3000,
-      host: process.env.HOST || "127.0.0.1",
+      host: process.env.HOST || "0.0.0.0",
     },
     options: {
       app_key_auth: process.env.APP_KEY_SECRET,
