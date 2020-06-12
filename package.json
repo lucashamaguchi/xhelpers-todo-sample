@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "sample para testar o xhelpers",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lucashamaguchi/x-helpers-todo-sample.git"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "format": "prettier --write \"src/**/*.ts\"",
