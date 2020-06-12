@@ -24,7 +24,7 @@ On the terminal:
 docker-compose up
 ```
 
-Go to http://localhost/documentation
+Go to http://localhost:3000/documentation
 
 ## Option 2 - Without docker
 
@@ -52,4 +52,4 @@ npm run dev
 ```
 
 
-Go to http://localhost/documentation
+Go to http://localhost:3000/documentation
