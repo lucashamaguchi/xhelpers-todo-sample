@@ -24,9 +24,10 @@ class TodoRoutes extends BaseRouteSimple {
       .build();
 
     this.route("GET", `/api/${httpResourcePath}/{id}`, {
-      description: "Get 'Todo' by id",
-    })
-      .validate({ params: this.defaultIdProperty })
+        description: "Get 'Todo' by id",
+      },
+      false
+    )
       .handler(async (r, h, u) => {
         return h.response(
           await new TodoService().queryAll({}, r.params)
@@ -50,8 +51,10 @@ class TodoRoutes extends BaseRouteSimple {
       .build();
 
     this.route("PATCH", `/api/${httpResourcePath}/{id}`, {
-      description: "Update 'Todo' by id",
-    })
+        description: "Update 'Todo' by id",
+      },
+      false
+    )
       .validate({ params: this.defaultIdProperty, payload: todoCreatePayload })
       .handler(async (r, h, u) => {
         return h
@@ -63,8 +66,10 @@ class TodoRoutes extends BaseRouteSimple {
       .build();
 
     this.route("PUT", `/api/${httpResourcePath}/{id}`, {
-      description: "Replace 'Todo' by id",
-    })
+        description: "Replace 'Todo' by id",
+      },
+      false
+    )
       .validate({ params: this.defaultIdProperty, payload: todoCreatePayload })
       .handler(async (r, h, u) => {
         return h
@@ -76,8 +81,10 @@ class TodoRoutes extends BaseRouteSimple {
       .build();
 
     this.route("DELETE", `/api/${httpResourcePath}/{id}`, {
-      description: "Delete 'Todo' by id",
-    })
+        description: "Delete 'Todo' by id",
+      },
+      false
+    )
       .validate({ params: this.defaultIdProperty })
       .handler(async (r, h, u) => {
         return h
