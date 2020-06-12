@@ -1,5 +1,5 @@
 # Build
-FROM node:10.16.3-alpine as build-env
+FROM node:12.16.3-alpine as build-env
 
 WORKDIR /app
 
@@ -14,8 +14,8 @@ RUN npm i && \
 RUN npm run build
 
 # Runtime
-FROM node:10.16.3-alpine as runtime
-ENV NODE_VERSION 10.16.3
+FROM node:12.16.3-alpine as runtime
+ENV NODE_VERSION 12.16.3
 RUN apk add --no-cache tzdata
 ENV TZ 'America/Sao_Paulo'
 
