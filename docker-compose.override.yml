@@ -3,10 +3,8 @@ services:
   api:
     build: .
     env_file: .env
-    volumes:
-      - .:/app
     ports:
-      - 5300:3000
+      - 3000:3000
 
   db:
     image: mongo
