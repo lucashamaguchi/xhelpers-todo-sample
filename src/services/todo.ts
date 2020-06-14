@@ -15,6 +15,6 @@ export class TodoService extends BaseServiceMongoose<ITodo> {
   public async delete(user: any, _id: any): Promise<void> {
     const entity = await this.Model.findById(_id).lean();
     if (!entity) throw "Entity not found";
-    await this.Model.deleteOne(_id);
+    await this.Model.deleteOne({ _id });
   };
 }
