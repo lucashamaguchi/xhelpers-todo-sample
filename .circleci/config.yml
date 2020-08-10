@@ -5,6 +5,7 @@ aliases:
       command: | 
         sudo apt-get update
         sudo apt-get install gettext-base
+        sudo apt-get install kubectl
   - &install-python-requirements
     run:
       name: Install python requirements
@@ -79,11 +80,10 @@ jobs:
             docker push $COMMIT_TAG
   deploy:
     docker:
-      - image: 'cimg/base:stable'
+      - image: circleci/python:3.6.6-stretch-browsers
     steps:
       - <<: *install-environment-requirements
       - checkout
-      - kube-orb/install-kubectl
       - run:
           name: "Connect to cluster"
           command: |
@@ -100,16 +100,14 @@ jobs:
               echo "export DEBUG=False" >> $BASH_ENV
             fi
       - run:
-          name: Deploy Over SSH
+          name: Deploy
           command: |
             export IMAGE_REPO_URL="${DOCKER_REPOSITORY}:${CIRCLE_SHA1}-${ENV}"
             export PORT=3000
             envsubst < .infra/deployment.yaml > output.yaml
             kubectl delete secret $SERVICE_NAME --namespace $K8S_NAMESPACE
             kubectl create secret generic $SERVICE_NAME --from-env-file=../.env --namespace $K8S_NAMESPACE
-      - kube-orb/create-or-update-resource:
-          resource-file-path: output.yaml
-
+            kubectl apply -f output.yaml
 workflows:
   version: 2
   staging:
