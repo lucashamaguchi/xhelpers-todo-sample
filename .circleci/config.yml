@@ -113,13 +113,12 @@ jobs:
             kubectl config --kubeconfig=/tmp/kubeconfig use-context deploy
             kubectl config --kubeconfig=/tmp/kubeconfig view
 
-            cat /tmp/kubeconfig
-            kubectl delete secret $SERVICE_NAME --namespace $K8S_NAMESPACE
+            kubectl delete --kubeconfig=/tmp/kubeconfig secret $SERVICE_NAME --namespace $K8S_NAMESPACE
 
             source $BASH_ENV
             env > .env
-            kubectl create secret generic $SERVICE_NAME --from-env-file=.env --namespace $K8S_NAMESPACE
-            kubectl apply -f output.yaml
+            kubectl create --kubeconfig=/tmp/kubeconfig secret generic $SERVICE_NAME --from-env-file=.env --namespace $K8S_NAMESPACE
+            kubectl apply --kubeconfig=/tmp/kubeconfig -f output.yaml
 workflows:
   version: 2
   staging:
