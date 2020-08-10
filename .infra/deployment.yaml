@@ -1,0 +1,83 @@
+# deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: $K8S_NAMESPACE
+  labels:
+    name: $SERVICE_NAME_TAG
+  name: $SERVICE_NAME
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      name: $SERVICE_NAME_TAG
+  template:
+    metadata:
+      labels:
+        name: $SERVICE_NAME_TAG
+    spec:
+      containers:
+      - name: $SERVICE_NAME
+        image: $IMAGE_REPO_URL
+        resources:
+          limits:
+            cpu: 100m
+            memory: 100M
+        ports:
+        - containerPort: 3000
+
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: liveness-port
+            scheme: HTTP
+          initialDelaySeconds: 10
+          timeoutSeconds: 5
+        envFrom:
+          - secretRef:
+              name: $SERVICE_NAME
+
+---
+
+# service
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: $K8S_NAMESPACE
+  name: $SERVICE_NAME
+spec:
+  ports:
+  - name: http
+    targetPort: 3000
+    port: 3000
+  selector:
+    name: $SERVICE_NAME_TAG
+
+---
+
+# dns
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  namespace: $K8S_NAMESPACE
+  name: $SERVICE_NAME_TAG 
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+  - hosts:
+    - $SERVICE_NAME.$DOMAIN
+    secretName: $SERVICE_NAME-tls
+  rules:
+  - host: $SERVICE_NAME.$DOMAIN
+    http:
+      paths:
+      - backend:
+          serviceName: $SERVICE_NAME
+          servicePort: 3000
