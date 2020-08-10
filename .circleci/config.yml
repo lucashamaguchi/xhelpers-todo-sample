@@ -90,8 +90,8 @@ jobs:
           name: "Connect to cluster"
           command: |
             kubectl config set-cluster cluster --server=$K8S_CLUSTER_IP --insecure-skip-tls-verify
-            kubectl config set-credentials cluster --username=$K8S_USERNAME --password=$K8S_TOKEN
-            kubectl config set-context deploy --cluster=cluster --namespace=default --user=admin
+            kubectl config set-credentials cluster --token=$K8S_TOKEN
+            kubectl config set-context deploy --cluster=cluster --namespace=default --user=$K8S_USERNAME
             kubectl config view
       - run:
           name: "Prepare Environment"
