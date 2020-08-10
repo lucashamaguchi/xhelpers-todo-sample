@@ -77,7 +77,7 @@ jobs:
             docker build -t $TAG_LATEST -t $COMMIT_TAG .
             docker push $TAG_LATEST
             docker push $COMMIT_TAG
-  create-update:
+  deploy:
     docker:
       - image: 'cimg/base:stable'
     steps:
