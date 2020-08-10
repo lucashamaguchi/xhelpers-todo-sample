@@ -113,6 +113,9 @@ jobs:
             kubectl config --kubeconfig=/tmp/kubeconfig use-context deploy
             kubectl config --kubeconfig=/tmp/kubeconfig view
 
+            kubectl version
+            kubectl current-context
+
             kubectl delete --kubeconfig=/tmp/kubeconfig secret $SERVICE_NAME --namespace $K8S_NAMESPACE
 
             source $BASH_ENV
