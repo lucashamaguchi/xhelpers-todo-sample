@@ -89,7 +89,9 @@ jobs:
       - run:
           name: "Connect to cluster"
           command: |
-            kubectl config set-cluster cluster --server=$K8S_CLUSTER_IP --insecure-skip-tls-verify --username=$K8S_USERNAME --token=$K8S_TOKEN
+            kubectl config set-cluster cluster --server=$K8S_CLUSTER_IP --insecure-skip-tls-verify
+            kubectl config set-credentials cluster --username=$K8S_USERNAME --token=$K8S_TOKEN
+            kubectl config set-context deploy --cluster=cluster --namespace=default --user=admin
       - run:
           name: "Prepare Environment"
           command: |
@@ -107,6 +109,7 @@ jobs:
             export IMAGE_REPO_URL="${DOCKER_REPOSITORY}:${CIRCLE_SHA1}-${ENV}"
             export PORT=3000
             envsubst < .infra/deployment.yaml > output.yaml
+            kubectl config use-context deploy
             kubectl delete secret $SERVICE_NAME --namespace $K8S_NAMESPACE
             kubectl create secret generic $SERVICE_NAME --from-env-file=../.env --namespace $K8S_NAMESPACE
             kubectl apply -f output.yaml
