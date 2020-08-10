@@ -114,7 +114,7 @@ jobs:
             kubectl config --kubeconfig=/tmp/kubeconfig view
 
             kubectl version
-            kubectl current-context
+            kubectl config current-context
 
             kubectl delete --kubeconfig=/tmp/kubeconfig secret $SERVICE_NAME --namespace $K8S_NAMESPACE
 
