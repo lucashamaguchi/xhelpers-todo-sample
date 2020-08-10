@@ -85,6 +85,10 @@ jobs:
       - checkout
       - kube-orb/install-kubectl
       - run:
+          name: "Connect to cluster"
+          command: |
+            kubectl config set-cluster cluster --server=$K8S_CLUSTER_IP --insecure-skip-tls-verify --username=$K8S_USERNAME --token=$K8S_TOKEN
+      - run:
           name: "Prepare Environment"
           command: |
             if [ ${CIRCLE_BRANCH} == "master" ]
