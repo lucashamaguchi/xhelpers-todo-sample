@@ -1,14 +1,14 @@
 import * as Joi from "@hapi/joi";
 // import * as jwt from "jsonwebtoken";
 
-import BaseRouteSimple from "xhelpers-api/lib/base-route-simple";
+import BaseRoute from "xhelpers-api/lib/base-route";
 import { TodoService } from "../services/todo"
 
 const httpResourcePath = "todos";
 
-class TodoRoutes extends BaseRouteSimple {
+class TodoRoutes extends BaseRoute<TodoService> {
   constructor() {
-    super([httpResourcePath]);
+    super(new TodoService(), [httpResourcePath]);
 
     this.route("GET",`/api/${httpResourcePath}`,{
         description: "Search 'Todos'",
@@ -18,7 +18,7 @@ class TodoRoutes extends BaseRouteSimple {
       .validate({ query: todoQueryParams })
       .handler(async (r, h, u) => {
         return h.response(
-          await new TodoService().queryAll({})
+          await this.service.queryAll({}, { filter: {}, fields: ["-__v"] })
         ).code(200);
       })
       .build();
@@ -30,7 +30,7 @@ class TodoRoutes extends BaseRouteSimple {
     )
       .handler(async (r, h, u) => {
         return h.response(
-          await new TodoService().queryAll({}, r.params)
+          await this.service.queryAll({}, r.params)
         ).code(200);
       })
       .build();
@@ -44,7 +44,7 @@ class TodoRoutes extends BaseRouteSimple {
       .handler(async (r, h, u) => {
         return h
           .response(
-            await new TodoService().create({}, r.payload)
+            await this.service.create({}, r.payload)
           )
         .code(200);
       })
@@ -59,7 +59,7 @@ class TodoRoutes extends BaseRouteSimple {
       .handler(async (r, h, u) => {
         return h
           .response(
-            await new TodoService().update({}, r.params.id, r.payload)
+            await this.service.update({}, r.params.id, r.payload)
           )
           .code(200);
       })
@@ -74,7 +74,7 @@ class TodoRoutes extends BaseRouteSimple {
       .handler(async (r, h, u) => {
         return h
           .response(
-            await new TodoService().update({}, r.params.id, r.payload)
+            await this.service.update({}, r.params.id, r.payload)
           )
           .code(200);
       })
@@ -89,7 +89,7 @@ class TodoRoutes extends BaseRouteSimple {
       .handler(async (r, h, u) => {
         return h
           .response(
-            await new TodoService().delete({}, r.params.id)
+            await this.service.delete({}, r.params.id)
           )
           .code(200);
       })
