@@ -88,6 +88,9 @@ jobs:
       - run:
           name: "Connect to cluster"
           command: |
+            mkdir -p $HOME/.kube
+            sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+            sudo chown $(id -u):$(id -g) $HOME/.kube/config
             export KUBECONFIG="/tmp/kubeconfig"
             kubectl config --kubeconfig=/tmp/kubeconfig set-cluster cluster --server=$K8S_CLUSTER_IP --insecure-skip-tls-verify
             kubectl config --kubeconfig=/tmp/kubeconfig set-credentials cluster --token=$K8S_TOKEN
