@@ -89,11 +89,11 @@ jobs:
           name: "Connect to cluster"
           command: |
             export KUBECONFIG="/tmp/kubeconfig"
-            kubectl config --kubeconfig=/tmp/kubeconfig set-cluster cluster --server=$K8S_CLUSTER_IP --insecure-skip-tls-verify
-            kubectl config --kubeconfig=/tmp/kubeconfig set-credentials $K8S_USERNAME --token=$K8S_TOKEN
-            kubectl config --kubeconfig=/tmp/kubeconfig set-context deploy --cluster=cluster --user=$K8S_USERNAME
-            kubectl config --kubeconfig=/tmp/kubeconfig use-context deploy
-            kubectl config --kubeconfig=/tmp/kubeconfig view
+            kubectl config set-cluster cluster --server=$K8S_CLUSTER_IP --insecure-skip-tls-verify
+            kubectl config set-credentials $K8S_USERNAME --token=$K8S_TOKEN
+            kubectl config set-context deploy --cluster=cluster --user=$K8S_USERNAME
+            kubectl config use-context deploy
+            kubectl config view
       - run:
           name: "Prepare Environment"
           command: |
@@ -111,17 +111,17 @@ jobs:
             export IMAGE_REPO_URL="${DOCKER_REPOSITORY}:${CIRCLE_SHA1}-${ENV}"
             export PORT=3000
             envsubst < .infra/deployment.yaml > output.yaml
-            kubectl config --kubeconfig=/tmp/kubeconfig use-context deploy
+            kubectl config use-context deploy
 
-            kubectl --kubeconfig=/tmp/kubeconfig version
-            kubectl config --kubeconfig=/tmp/kubeconfig current-context
+            kubectl version
+            kubectl config current-context
 
-            kubectl delete --kubeconfig=/tmp/kubeconfig secret $SERVICE_NAME --namespace $K8S_NAMESPACE
+            kubectl delete secret $SERVICE_NAME --namespace $K8S_NAMESPACE
 
             source $BASH_ENV
             env > .env
-            kubectl create --kubeconfig=/tmp/kubeconfig secret generic $SERVICE_NAME --from-env-file=.env --namespace $K8S_NAMESPACE
-            kubectl apply --kubeconfig=/tmp/kubeconfig -f output.yaml
+            kubectl create secret generic $SERVICE_NAME --from-env-file=.env --namespace $K8S_NAMESPACE
+            kubectl apply -f output.yaml
 workflows:
   version: 2
   staging:
