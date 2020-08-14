@@ -23,7 +23,7 @@
     "dotenv": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.1",
-    "xhelpers-api": "^2.1.6"
+    "xhelpers-api": "^2.1.9"
   },
   "devDependencies": {
     "@types/mongoose": "^5.7.21",
