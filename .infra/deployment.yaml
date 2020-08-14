@@ -51,7 +51,8 @@ metadata:
   name: $SERVICE_NAME
 spec:
   ports:
-  - targetPort: 3000
+  - name: http
+    targetPort: 3000
     port: 3000
   selector:
     name: $SERVICE_NAME_TAG
