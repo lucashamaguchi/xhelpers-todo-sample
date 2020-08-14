@@ -113,7 +113,7 @@ jobs:
             envsubst < .infra/deployment.yaml > output.yaml
             kubectl config --kubeconfig=/tmp/kubeconfig use-context deploy
 
-            kubectl version
+            kubectl config --kubeconfig=/tmp/kubeconfig version
             kubectl config --kubeconfig=/tmp/kubeconfig current-context
 
             kubectl delete --kubeconfig=/tmp/kubeconfig secret $SERVICE_NAME --namespace $K8S_NAMESPACE
