@@ -18,7 +18,7 @@ class TodoRoutes extends BaseRoute<TodoService> {
       .validate({ query: todoQueryParams })
       .handler(async (r, h, u) => {
         return h.response(
-          await this.service.queryAll({}, { filter: {}, fields: ["-__v"] })
+          await this.service.queryAll({}, { filter: r.query, fields: ["-__v"] })
         ).code(200);
       })
       .build();
