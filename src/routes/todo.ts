@@ -106,8 +106,6 @@ const todoBase = Joi.object({
   description: Joi.string()
     .description("Description"),
   done: Joi.boolean()
-    .required()
-    .default(false)
     .description("Todo is done"),
 });
 
