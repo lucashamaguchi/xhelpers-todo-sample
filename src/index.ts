@@ -11,7 +11,7 @@ async function start() {
       host: process.env.HOST || "0.0.0.0",
     },
     options: {
-      app_key_auth: process.env.APP_KEY_SECRET,
+      jwt_secret: process.env.JWT_SECRET,
       swaggerOptions: {
         info: {
           title: pkgJson.description,
