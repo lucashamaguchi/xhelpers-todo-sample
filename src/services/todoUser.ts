@@ -29,14 +29,14 @@ export class TodoService extends BaseServiceMongoose<ITodo> {
   }
 
   public async update(user, id, payload) {
-    const entity = await this.Model.findById(id);
-    if (!entity || user._id !== entity._id) throw Boom.notFound("Todo not found");
+    const entity = await this.Model.findById(id) as ITodo;
+    if (!entity || user._id !== entity.createdBy) throw Boom.notFound("Todo not found");
     return await super.update(user, id, { ...payload });
   }
 
   public async delete(user: any, id: any): Promise<void> {
-    const entity = await this.Model.findById(id).lean();
-    if (!entity || user._id !== entity._id) throw Boom.notFound("Todo not found");
+    const entity = await this.Model.findById(id).lean() as ITodo;
+    if (!entity || user._id !== entity.createdBy) throw Boom.notFound("Todo not found");
     await this.Model.deleteOne({ _id: id });
   }
 }
