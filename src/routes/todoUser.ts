@@ -46,6 +46,7 @@ class TodoRoutes extends BaseRoute<TodoService> {
     )
       .validate({ payload: todoCreatePayload })
       .handler(async (r, h, u) => {
+        r.payload.createdBy = u._id;
         return h
           .response(
             await this.service.create(u, r.payload)
