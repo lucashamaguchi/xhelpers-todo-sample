@@ -1,4 +1,4 @@
-import Todo, { ITodo } from "../model/todo"; // mongoose or sequelize "Model"
+import Todo, { ITodo } from "../model/todoUser"; // mongoose or sequelize "Model"
 import BaseServiceMongoose from "xhelpers-api/lib/base-service-mongoose";
 import * as Boom from "@hapi/boom";
 
