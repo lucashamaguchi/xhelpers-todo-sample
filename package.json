@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lucashamaguchi/x-helpers-todo-sample.git"
+    "url": "https://github.com/lucashamaguchi/xhelpers-todo-sample.git"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
