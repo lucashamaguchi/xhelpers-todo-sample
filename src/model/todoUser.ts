@@ -1,5 +1,4 @@
 import * as mongoose from "mongoose";
-import { XSchema } from "./index"
 
 export interface ITodo extends mongoose.Document {
   task: string;
@@ -9,7 +8,7 @@ export interface ITodo extends mongoose.Document {
   createdBy: string;
 }
 
-const schema = new XSchema({
+const schema = new mongoose.Schema({
   task: { type: String , required: true },
   description: { type: String , required: true },
   created_at: { type: Date, required: false, default: new Date() },
