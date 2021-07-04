@@ -134,7 +134,7 @@ jobs:
       run: |
         export IMAGE_REPO_URL=${AWS_ACCOUNT_ID}.dkr.ecr.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:${{ github.sha }}
         export CERT_MANAGER_ISSUE_TEMPORARY_CERTICATE="false"
-        export INGRESS_EDIT_IN_PLACE="true"
+        export INGRESS_EDIT_IN_PLACE="false"
         echo "IMAGE_REPO_URL=${IMAGE_REPO_URL}" >> $GITHUB_ENV
         echo "CERT_MANAGER_ISSUE_TEMPORARY_CERTICATE=${CERT_MANAGER_ISSUE_TEMPORARY_CERTICATE}" >> $GITHUB_ENV
         echo "INGRESS_EDIT_IN_PLACE=${INGRESS_EDIT_IN_PLACE}" >> $GITHUB_ENV
