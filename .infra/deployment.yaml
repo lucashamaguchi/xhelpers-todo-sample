@@ -82,7 +82,7 @@ metadata:
   name: $SERVICE_NAME_TAG 
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-    kubernetes.io/ingress.class: nginx
+    kubernetes.io/ingress.class: public
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     cert-manager.io/issue-temporary-certificate: "$CERT_MANAGER_ISSUE_TEMPORARY_CERTICATE"  # temporary cert required for nginx to be able to reload
     acme.cert-manager.io/http01-edit-in-place: "$INGRESS_EDIT_IN_PLACE"  # important to merge with existing ingress resource into a single nginx config file
