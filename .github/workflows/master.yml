@@ -156,13 +156,13 @@ jobs:
     - name: Create image pull secrets kubernetes
       run: |
         kubectl delete secret aws-ecr-pull-secret --namespace ${{ env.K8S_NAMESPACE }} --ignore-not-found
-        TOKEN=`aws ecr get-login-password --region ${{ env.ECR_REGION }} --registry-ids ${{ env.AWS_ACCOUNT_ID }} | cut -d' ' -f6`
+        TOKEN=`aws ecr get-login-password --region ${{ env.ECR_REGION }}
         kubectl create secret docker-registry aws-ecr-pull-secret \
           --docker-username AWS \
           --docker-server ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.ECR_REGION }}.amazonaws.com \
           --docker-email anymail.doesnt.matter@email.local \
-          --docker-password $TOKEN \
-          -n apps
+          --docker-password $
+          -n ${{ env.K8S_NAMESPACE }}
 
     - uses: danielr1996/envsubst-action@1.0.0
       with:
