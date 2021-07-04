@@ -153,11 +153,6 @@ jobs:
         kubectl delete secret $SERVICE_NAME --namespace $K8S_NAMESPACE --ignore-not-found
         kubectl create secret generic $SERVICE_NAME --from-env-file=.env.project --namespace $K8S_NAMESPACE
 
-    - name: Test
-      run: |
-        echo $IMAGE_PULL_SECRET
-        kubectl delete secret $IMAGE_PULL_SECRET --namespace ${{ env.K8S_NAMESPACE }} --ignore-not-found
-
     - name: Create image pull secrets kubernetes
       run: |
         kubectl delete secret $IMAGE_PULL_SECRET --namespace ${{ env.K8S_NAMESPACE }} --ignore-not-found
