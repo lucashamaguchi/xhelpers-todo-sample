@@ -172,15 +172,12 @@ jobs:
     - name: Delete pull secrets kubernetes
       run: |
         kubectl delete secret aws-ecr-pull-secret --namespace ${{ env.K8S_NAMESPACE }} --ignore-not-found
-
-    - name: Set imagePullSecret
-      uses: azure/k8s-create-secret@v1
-      with:
-        namespace: '${{ env.K8S_NAMESPACE }}'
-        container-registry-url: '${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.ECR_REGION }}.amazonaws.com'
-        container-registry-username: AWS
-        container-registry-password: ${{ needs.loginecr.outputs.token }}
-        secret-name: 'aws-ecr-pull-secret'
+        kubectl create secret docker-registry aws-ecr-pull-secret \
+          --docker-username AWS \
+          --docker-server 381097603548.dkr.ecr.sa-east-1.amazonaws.com \
+          --docker-email anymail.doesnt.matter@email.local \
+          --docker-password ${{ needs.loginecr.outputs.token }} \
+          -n apps
 
     - uses: danielr1996/envsubst-action@1.0.0
       with:
