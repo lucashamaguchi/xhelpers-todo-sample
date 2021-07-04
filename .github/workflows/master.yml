@@ -104,13 +104,22 @@ jobs:
     outputs:
       token: ${{ steps.ecr.outputs.token }}
     steps:
-      -
-        name: Get token to login to Amazon ECR
-        uses: PhutureCorp/ecr-login-token@v0.8.0
-        with:
-          registry: ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.ECR_REGION }}.amazonaws.com
-          username: ${{ env.AWS_ACCESS_KEY_ID }}
-          password: ${{ env.AWS_SECRET_ACCESS_KEY }}
+    - name: Install Doppler CLI
+      uses: dopplerhq/cli-action@v1
+
+    - name: get env root
+      run: doppler secrets download -t ${{ env.DOPPLER_TOKEN_ROOT }} --no-file --format env-no-quotes >> .env.deploy;
+
+    - name: import to env
+      run: |
+        cat .env.deploy >> $GITHUB_ENV;
+    -
+      name: Get token to login to Amazon ECR
+      uses: PhutureCorp/ecr-login-token@v0.8.0
+      with:
+        registry: ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.ECR_REGION }}.amazonaws.com
+        username: ${{ env.AWS_ACCESS_KEY_ID }}
+        password: ${{ env.AWS_SECRET_ACCESS_KEY }}
 
   deploy:
     runs-on: ubuntu-latest
