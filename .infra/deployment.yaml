@@ -10,11 +10,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: $K8S_NAMESPACE
+  annotations:
+    secret.reloader.stakater.com/reload: $SERVICE_NAME
   labels:
     name: $SERVICE_NAME_TAG
   name: $SERVICE_NAME
 spec:
-  replicas: 2
+  replicas: 1
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -27,23 +29,29 @@ spec:
       labels:
         name: $SERVICE_NAME_TAG
     spec:
+      imagePullSecrets:
+      - name: $IMAGE_PULL_SECRET
       containers:
       - name: $SERVICE_NAME
         image: $IMAGE_REPO_URL
+        imagePullPolicy: Always
         resources:
           limits:
-            cpu: 100m
+            cpu: 200m
+            memory: 500M
+          requests:
+            cpu: 50m
             memory: 100M
         ports:
-        - containerPort: 3000
+        - containerPort: 80
 
         livenessProbe:
           httpGet:
             path: /health
-            port: liveness-port
+            port: 80
             scheme: HTTP
-          initialDelaySeconds: 10
-          timeoutSeconds: 5
+          initialDelaySeconds: 20
+          timeoutSeconds: 10
         envFrom:
           - secretRef:
               name: $SERVICE_NAME
@@ -59,8 +67,8 @@ metadata:
 spec:
   ports:
   - name: http
-    targetPort: 3000
-    port: 3000
+    targetPort: 80
+    port: 80
   selector:
     name: $SERVICE_NAME_TAG
 
@@ -76,15 +84,17 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
     kubernetes.io/ingress.class: "nginx"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    cert-manager.io/issue-temporary-certificate: "$CERT_MANAGER_ISSUE_TEMPORARY_CERTICATE"  # temporary cert required for nginx to be able to reload
+    acme.cert-manager.io/http01-edit-in-place: "$INGRESS_EDIT_IN_PLACE"  # important to merge with existing ingress resource into a single nginx config file
 spec:
   tls:
   - hosts:
-    - $SERVICE_NAME.$DOMAIN
+    - $SERVICE_URL
     secretName: $SERVICE_NAME-tls
   rules:
-  - host: $SERVICE_NAME.$DOMAIN
+  - host: $SERVICE_URL
     http:
       paths:
       - backend:
           serviceName: $SERVICE_NAME
-          servicePort: 3000
+          servicePort: 80
