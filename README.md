@@ -1,9 +1,8 @@
 # xhelpers-todo-sample-api
 
 ## Check out the live examples:
- - [Todo Web without auth](https://todos.hamaguchi.site) ([Backend](https://xhelpers-todo-sample-api.hamaguchi.site/documentation#))
- - [Todo Web with auth](https://account.hamaguchi.site) ([Backend](https://xhelpers-todo-sample-api.hamaguchi.site/documentation#))
-
+ - [Todo Web without auth](https://todo.vue.hamaguchi.com.br) ([Backend](https://api.todo.hamaguchi.com.br/documentation#))
+ - [Todo Web with auth](https://account.vue.hamaguchi.com.br) ([Backend](https://api.todo.hamaguchi.com.br/documentation#))
 ## Check out the front source:
   - [Todo Web without auth](https://github.com/lucashamaguchi/todo-sample-web)
   - [Todo Web with auth](https://github.com/lucashamaguchi/account-sample-web)
