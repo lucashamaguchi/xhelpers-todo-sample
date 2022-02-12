@@ -12,7 +12,6 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "dev": "export NODE_ENV=DEV && tsc-watch -p tsconfig.json --onSuccess \"node dist/index.js\"",
     "start": "export NODE_ENV=PROD && node dist/index.js",
-    "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "export NODE_ENV=TEST && $(npm bin)/mocha -r ts-node/register --exit --reporter=spec --recursive src/test/**.spec.ts",
     "tsc": "tsc"
   },
