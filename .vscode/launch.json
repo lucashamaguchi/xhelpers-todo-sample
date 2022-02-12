@@ -13,40 +13,26 @@
             ],
             "runtimeExecutable": "npm",
             "console": "integratedTerminal",
-            "envFile": "${workspaceFolder}/.env.test",
+            "envFile": "${workspaceFolder}/.env",
             "skipFiles": [
                 "<node_internals>/**"
             ],
             "type": "pwa-node",
         },
         {
-            "type": "node",
+            "name": "NPM dev",
             "request": "launch",
-            "name": "Mocha All",
-            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-            "args": [
-                "-r",
-                "ts-node/register",
-                "--exit",
-                "--no-timeouts",
-                // "-reporter=spec",
-                "--colors",
-                "--recursive",
-                "src/tests/**.spec.ts",
+            "runtimeArgs": [
+                "run-script",
+                "dev",
             ],
-            "runtimeExecutable": null,
+            "runtimeExecutable": "npm",
             "console": "integratedTerminal",
-            "envFile": "${workspaceFolder}/.env.test",
-            "preLaunchTask": "tsc: build - tsconfig.json",
-            // "internalConsoleOptions": "neverOpen",
-            "sourceMaps": true,
-            "cwd": "${workspaceRoot}",
-            "stopOnEntry": false,
-            "protocol": "inspector",
-            "outFiles": ["${workspaceFolder}/dist/**/*.js"],
-            "env": {
-                "NODE_ENV": "TEST"
-             },
+            "envFile": "${workspaceFolder}/.env",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node",
         }
     ]
 }
